@@ -3,12 +3,12 @@ import tape from 'tape'
 
 import Preloader from 'preload.io'
 import { EVENTS } from 'preload.io'
-import ImageLoader from '../lib'
+import JSONLoader from '../lib'
 
-tape( 'Should expose imageLoader as the name of the module loader', t => {
+tape( 'Should expose JSONLoader as the name of the module loader', t => {
     t.plan( 1 )
 
-    let imageLoader = new ImageLoader()
+    let JSONLoader = new JSONLoader()
 
-    t.equal( imageLoader.name, 'imageLoader' )
+    t.equal( JSONLoader.name, 'JSONLoader' )
 })
