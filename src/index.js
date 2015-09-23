@@ -1,7 +1,7 @@
 
+import 'regenerator/runtime'
 import 'whatwg-fetch'
 import { EVENTS } from 'preload.io'
-
 
 class IOError extends Error {
     constructor( opts ) {
@@ -17,19 +17,15 @@ class IOError extends Error {
 }
 
 
-export default class ImageLoader {
+export default class JSONLoader {
     constructor( opts ) {
-        this.opts = Object.assign({
-            blob: false
-        }, opts )
-        this.name = 'imageLoader'
-        this.match = /jpg$|jpeg$|png$/
+        this.name = 'JSONLoader'
+        this.match = /json$/
     }
 
     async load( ctx, opts ) {
-        // @TODO optionally use old school tag loading
         let res = null
-        let blob = null
+        let json = null
         try {
             res = await fetch( opts.url )
                 .then( response => {
@@ -42,10 +38,17 @@ export default class ImageLoader {
                         status: response.status
                     })
                 })
-
-            if ( this.opts.blob ) {
-                blob = await res.blob()
-            }
+                .then( async response => {
+                    try {
+                        json = await response.json()
+                    } catch( err ) {
+                        throw new IOError({
+                            message: 'Error turning response into json',
+                            status: response.status
+                        })
+                    }
+                    return response
+                })
         } catch( err ) {
             ctx.emit( EVENTS.LOAD_ERROR, {
                 id: opts.id,
@@ -58,7 +61,7 @@ export default class ImageLoader {
         ctx.emit( EVENTS.LOAD, {
             id: opts.id,
             status: res.status,
-            res: blob || res
+            res: json
         })
     }
 }

@@ -12,7 +12,8 @@ preloader.on( EVENTS.LOAD, event => {
     console.log( event )
 
     let code = document.createElement( 'code' )
-    code.innerHTML = JSON.stringify( event.res, null, '\n  ' )
+    code.style[ 'white-space' ] = 'pre'
+    code.innerHTML = JSON.stringify( event.res, null, '  ' )
     document.body.appendChild( code )
 })
 preloader.on( EVENTS.LOAD_ERROR, event => {
