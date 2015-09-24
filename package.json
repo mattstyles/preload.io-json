@@ -1,6 +1,6 @@
 {
   "name": "preload.io-json",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Preload.io loader for json files",
   "main": "lib/index.js",
   "scripts": {
