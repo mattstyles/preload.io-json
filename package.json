@@ -4,6 +4,7 @@
   "description": "Preload.io loader for json files",
   "main": "lib/index.js",
   "scripts": {
+    "prepublish": "npm run build",
     "prepack": "npm run build",
     "build": "babel src --out-dir lib",
     "watch": "babel src --out-dir lib --watch",

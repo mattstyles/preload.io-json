@@ -19,15 +19,16 @@ export default class JSONLoader {
   constructor( opts ) {
     this.name = 'JSONLoader'
     this.match = /json$/
+    this.opts = opts
   }
 
   async load( ctx, opts ) {
     let res = null
     let json = null
     try {
-      res = await fetch( opts.resource )
+      res = await fetch( opts.resource, Object.assign( {}, this.opts, opts.options ) )
           .then( response => {
-            if ( response.status >= 200 && response.status < 300 ) {
+            if ( response.ok || response.type === 'opaque' ) {
               return response
             }
 
