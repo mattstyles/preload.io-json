@@ -50,3 +50,28 @@ preloader.on( EVENTS.LOAD, event => {
   }
 })
 ```
+
+## Passing options to fetch
+
+`JSONLoader` uses `fetch` to preload the resource, options you supply will be passed to `fetch`, in this order of precedence:
+
+```js
+preloader.load({
+  resource: 'stuff.json',
+  options: {
+    mode: 'no-cors'
+  }
+})
+```
+
+```js
+const jsonLoader = new JSONLoader({
+  mode: 'no-cors'
+})
+```
+
+```js
+const preloader = new Preloader({
+  mode: 'no-cors'
+})
+```
